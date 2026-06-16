@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Saket Ranjan — Tech Lead & Solution Architect</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  --bg:        #0b0d12;
+  --bg2:       #111318;
+  --bg3:       #181b23;
+  --bg4:       #1f2230;
+  --line:      rgba(255,255,255,0.07);
+  --line2:     rgba(255,255,255,0.12);
+  --text:      #e4e6f0;
+  --muted:     #8b90a8;
+  --dim:       #52566a;
+  --accent:    #5b8af5;
+  --accent2:   #7b68ee;
+  --green:     #34d399;
+  --amber:     #fbbf24;
+  --pink:      #f472b6;
+  --teal:      #2dd4bf;
+  --font: 'Inter', sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+/* ── LAYOUT ── */
+.shell { display: flex; min-height: 100vh; }
+.sidebar {
+  width: 280px;
+  min-width: 280px;
+  background: var(--bg2);
+  border-right: 1px solid var(--line);
+  padding: 32px 24px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+.sidebar::-webkit-scrollbar { width: 3px; }
+.sidebar::-webkit-scrollbar-thumb { background: var(--bg4); }
+.main { flex: 1; padding: 40px 44px; max-width: 900px; overflow-x: hidden; }
+
+/* ── AVATAR & HEADER ── */
+.avatar-wrap { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+.avatar {
+  width: 80px; height: 80px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px; font-weight: 700; color: #fff;
+  letter-spacing: -1px; flex-shrink: 0;
+  box-shadow: 0 0 0 3px var(--bg2), 0 0 0 5px rgba(91,138,245,0.25);
+}
+.sidebar-name { font-size: 16px; font-weight: 700; text-align: center; letter-spacing: -0.3px; }
+.sidebar-title {
+  font-size: 11px; font-weight: 500; letter-spacing: .8px; text-transform: uppercase;
+  color: var(--accent); text-align: center; margin-top: 2px;
+}
+
+/* ── SIDEBAR CONTACT ── */
+.sb-section { display: flex; flex-direction: column; gap: 8px; }
+.sb-label { font-size: 10px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--dim); margin-bottom: 4px; }
+.sb-item { display: flex; align-items: flex-start; gap: 8px; font-size: 12px; color: var(--muted); line-height: 1.4; }
+.sb-icon { color: var(--accent); font-size: 13px; margin-top: 1px; flex-shrink: 0; }
+
+/* ── SIDEBAR NAV ── */
+.nav { display: flex; flex-direction: column; gap: 2px; }
+.nav-item {
+  display: flex; align-items: center; gap: 8px;
+  padding: 7px 10px; border-radius: 7px;
+  font-size: 12px; font-weight: 500; color: var(--muted);
+  cursor: pointer; border: none; background: transparent;
+  text-align: left; transition: color .15s, background .15s;
+  font-family: var(--font);
+}
+.nav-item:hover { color: var(--text); background: var(--bg3); }
+.nav-item.active { color: var(--accent); background: rgba(91,138,245,0.1); }
+.nav-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; opacity: .6; flex-shrink: 0; }
+
+/* ── SKILL PILLS (sidebar) ── */
+.skill-cloud { display: flex; flex-wrap: wrap; gap: 5px; }
+.pill {
+  font-size: 11px; padding: 3px 9px; border-radius: 5px;
+  font-weight: 500; letter-spacing: .1px;
+}
+.pill-blue   { background: rgba(91,138,245,0.12);  color: #7aacff; }
+.pill-green  { background: rgba(52,211,153,0.1);   color: #34d399; }
+.pill-purple { background: rgba(123,104,238,0.12); color: #a394f9; }
+.pill-amber  { background: rgba(251,191,36,0.1);   color: #fbbf24; }
+.pill-teal   { background: rgba(45,212,191,0.1);   color: #2dd4bf; }
+.pill-pink   { background: rgba(244,114,182,0.1);  color: #f472b6; }
+
+/* ── CERTS ── */
+.cert-item {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 12px; color: var(--muted); padding: 6px 8px;
+  background: var(--bg3); border-radius: 7px; border: 1px solid var(--line);
+}
+.cert-icon { color: var(--amber); font-size: 14px; }
+
+/* ── MAIN SECTIONS ── */
+section { margin-bottom: 44px; scroll-margin-top: 24px; }
+.section-head {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 20px;
+}
+.section-head h2 {
+  font-size: 13px; font-weight: 600; letter-spacing: .8px;
+  text-transform: uppercase; color: var(--accent);
+}
+.section-head::after {
+  content: ''; flex: 1; height: 1px; background: var(--line2);
+}
+
+/* ── HERO HEADER ── */
+.hero { margin-bottom: 36px; }
+.hero-name {
+  font-size: 34px; font-weight: 700; letter-spacing: -1px;
+  line-height: 1.1; margin-bottom: 6px;
+}
+.hero-name span { color: var(--accent); }
+.hero-roles {
+  display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px;
+}
+.role-badge {
+  font-size: 12px; padding: 4px 12px; border-radius: 6px;
+  font-weight: 600; letter-spacing: .2px;
+}
+.hero-summary {
+  font-size: 14px; color: var(--muted); line-height: 1.75;
+  max-width: 640px; border-left: 2px solid var(--accent);
+  padding-left: 16px;
+}
+.hero-metrics { display: flex; gap: 24px; margin-top: 20px; flex-wrap: wrap; }
+.metric { text-align: center; }
+.metric-val { font-size: 26px; font-weight: 700; color: var(--accent); line-height: 1; }
+.metric-label { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+/* ── EXPERIENCE CARDS ── */
+.exp-card {
+  background: var(--bg2);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  margin-bottom: 12px;
+  overflow: hidden;
+  transition: border-color .2s;
+}
+.exp-card:hover { border-color: var(--line2); }
+.exp-header {
+  padding: 16px 20px;
+  display: flex; align-items: flex-start; gap: 14px;
+  cursor: pointer; user-select: none;
+}
+.exp-company-logo {
+  width: 38px; height: 38px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 700; flex-shrink: 0;
+}
+.exp-meta { flex: 1; min-width: 0; }
+.exp-title { font-size: 14px; font-weight: 600; }
+.exp-company { font-size: 13px; color: var(--muted); margin-top: 1px; }
+.exp-date {
+  font-size: 11px; font-family: var(--mono);
+  color: var(--dim); white-space: nowrap; margin-top: 4px;
+}
+.exp-toggle {
+  font-size: 18px; color: var(--dim);
+  transition: transform .2s, color .2s;
+  flex-shrink: 0; margin-top: 4px;
+}
+.exp-card.open .exp-toggle { transform: rotate(180deg); color: var(--accent); }
+.exp-body { display: none; padding: 0 20px 20px; }
+.exp-card.open .exp-body { display: block; }
+
+/* Projects inside exp */
+.proj-card {
+  background: var(--bg3);
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+.proj-header {
+  padding: 12px 16px;
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 12px;
+  cursor: pointer; user-select: none;
+}
+.proj-name { font-size: 13px; font-weight: 600; }
+.proj-period {
+  font-size: 11px; font-family: var(--mono); color: var(--dim);
+  white-space: nowrap; flex-shrink: 0;
+}
+.proj-meta { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 5px; }
+.proj-body { display: none; padding: 0 16px 14px; }
+.proj-card.open .proj-body { display: block; }
+.proj-toggle { font-size: 14px; color: var(--dim); transition: transform .2s; flex-shrink:0; margin-top:3px; }
+.proj-card.open .proj-toggle { transform: rotate(180deg); color: var(--accent); }
+
+.tech-tag {
+  font-size: 10px; font-weight: 500; padding: 2px 7px;
+  background: rgba(91,138,245,0.1); color: #7aacff;
+  border-radius: 4px;
+}
+.client-tag {
+  font-size: 10px; font-weight: 500; padding: 2px 7px;
+  background: rgba(52,211,153,0.1); color: #34d399;
+  border-radius: 4px;
+}
+
+.proj-desc { font-size: 12px; color: var(--muted); line-height: 1.65; margin-bottom: 10px; }
+.bullet-list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 5px; }
+.bullet-list li {
+  font-size: 12px; color: var(--muted); line-height: 1.6;
+  padding-left: 16px; position: relative;
+}
+.bullet-list li::before {
+  content: '▸'; position: absolute; left: 0;
+  color: var(--accent); font-size: 10px; top: 3px;
+}
+strong.kw { color: var(--text); font-weight: 600; }
+
+/* ── SKILLS SECTION ── */
+.skills-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+.skill-group {
+  background: var(--bg2); border: 1px solid var(--line);
+  border-radius: 10px; padding: 14px 16px;
+}
+.skill-group-title {
+  font-size: 11px; font-weight: 600; letter-spacing: .6px;
+  text-transform: uppercase; color: var(--muted); margin-bottom: 10px;
+}
+.skill-bars { display: flex; flex-direction: column; gap: 8px; }
+.skill-row { display: flex; align-items: center; gap: 10px; }
+.skill-name { font-size: 12px; color: var(--text); min-width: 120px; }
+.skill-bar-track { flex: 1; height: 4px; background: var(--bg4); border-radius: 2px; overflow: hidden; }
+.skill-bar-fill {
+  height: 100%; border-radius: 2px;
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.skill-bar-fill.animated { transform: scaleX(1); }
+
+/* ── EDUCATION ── */
+.edu-item {
+  display: flex; gap: 14px; align-items: flex-start;
+  padding: 14px 16px;
+  background: var(--bg2); border: 1px solid var(--line);
+  border-radius: 10px; margin-bottom: 8px;
+}
+.edu-icon {
+  width: 36px; height: 36px; border-radius: 8px; flex-shrink: 0;
+  background: rgba(91,138,245,0.12);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+}
+.edu-deg { font-size: 13px; font-weight: 600; }
+.edu-school { font-size: 12px; color: var(--muted); }
+.edu-year { font-size: 11px; font-family: var(--mono); color: var(--dim); margin-top: 2px; }
+
+/* ── ACHIEVEMENTS ── */
+.ach-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.ach-item {
+  background: var(--bg2); border: 1px solid var(--line);
+  border-radius: 9px; padding: 12px 14px;
+  display: flex; gap: 10px; align-items: flex-start;
+}
+.ach-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+.ach-text { font-size: 12px; color: var(--muted); line-height: 1.55; }
+
+/* ── PRINT / ATS HIDDEN TEXT ── */
+.ats-only {
+  position: absolute; left: -9999px; top: -9999px;
+  width: 1px; height: 1px; overflow: hidden;
+}
+
+/* ── MOBILE ── */
+@media (max-width: 800px) {
+  .shell { flex-direction: column; }
+  .sidebar { width: 100%; min-width: unset; height: auto; position: relative; padding: 24px 20px; }
+  .main { padding: 24px 20px; }
+  .skills-grid { grid-template-columns: 1fr; }
+  .ach-grid { grid-template-columns: 1fr; }
+  .hero-name { font-size: 24px; }
+}
+
+/* ── PRINT STYLES (ATS-friendly) ── */
+@media print {
+  body { background: #fff; color: #000; font-size: 11pt; }
+  .shell { flex-direction: column; }
+  .sidebar { display: none; }
+  .main { padding: 0; max-width: 100%; }
+  .exp-body { display: block !important; }
+  .proj-body { display: block !important; }
+  .exp-toggle, .proj-toggle { display: none; }
+  a { color: #000; }
+  .pill, .tech-tag, .client-tag, .role-badge { border: 1px solid #ccc; }
+}
+
+@keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+.fade-up { animation: fadeUp .35s ease forwards; }
+
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+</style>
+</head>
+<body>
+
+<!-- ATS plain-text hidden content for parsers -->
+<div class="ats-only" aria-hidden="true">
+Saket Ranjan. Tech Lead. Solution Architect. Senior Software Engineer.
+11.5 years experience. Java Spring Boot Microservices Kafka Azure Docker Kubernetes.
+AT&T Fiserv Commerce Hub CyberSource Payment Integration.
+GenAI Agentic AI MCP Server GitHub Copilot Claude Code.
+Contact: saket.ranjan2407@gmail.com +91-9309177135 Pune India.
+Certifications: AZ-900 Azure Fundamentals, AZ-203 Azure Developer Associate.
+Education: B.Tech Computer Science SRM University Chennai 2012.
+</div>
+
+<div class="shell">
+
+<!-- ════════════════ SIDEBAR ════════════════ -->
+<aside class="sidebar" role="complementary" aria-label="Contact and skills">
+
+  <div class="avatar-wrap">
+    <div class="avatar">SR</div>
+    <div>
+      <div class="sidebar-name">Saket Ranjan</div>
+      <div class="sidebar-title">Tech Lead · Solution Architect</div>
+    </div>
+  </div>
+
+  <!-- Contact -->
+  <div class="sb-section">
+    <div class="sb-label">Contact</div>
+    <div class="sb-item"><span class="sb-icon">✉</span><span>saket.ranjan2407@gmail.com</span></div>
+    <div class="sb-item"><span class="sb-icon">✆</span><span>+91-9309177135</span></div>
+    <div class="sb-item"><span class="sb-icon">◉</span><span>Pune, Maharashtra, India</span></div>
+  </div>
+
+  <!-- Nav -->
+  <nav class="nav" aria-label="Resume sections">
+    <button class="nav-item active" onclick="scrollTo('summary')"><span class="nav-dot"></span>Summary</button>
+    <button class="nav-item" onclick="scrollTo('experience')"><span class="nav-dot"></span>Experience</button>
+    <button class="nav-item" onclick="scrollTo('skills')"><span class="nav-dot"></span>Skills</button>
+    <button class="nav-item" onclick="scrollTo('certifications')"><span class="nav-dot"></span>Certifications</button>
+    <button class="nav-item" onclick="scrollTo('education')"><span class="nav-dot"></span>Education</button>
+    <button class="nav-item" onclick="scrollTo('achievements')"><span class="nav-dot"></span>Achievements</button>
+  </nav>
+
+  <!-- Top Skills -->
+  <div class="sb-section">
+    <div class="sb-label">Core Technologies</div>
+    <div class="skill-cloud">
+      <span class="pill pill-blue">Java 8/11/17</span>
+      <span class="pill pill-blue">Spring Boot</span>
+      <span class="pill pill-green">Microservices</span>
+      <span class="pill pill-green">Kafka</span>
+      <span class="pill pill-purple">Azure</span>
+      <span class="pill pill-purple">Docker</span>
+      <span class="pill pill-purple">Kubernetes</span>
+      <span class="pill pill-amber">GenAI / MCP</span>
+      <span class="pill pill-teal">Solution Design</span>
+      <span class="pill pill-teal">System Architecture</span>
+      <span class="pill pill-pink">Payment Systems</span>
+      <span class="pill pill-pink">REST APIs</span>
+    </div>
+  </div>
+
+  <!-- Certifications sidebar -->
+  <div class="sb-section">
+    <div class="sb-label">Certifications</div>
+    <div class="cert-item"><span class="cert-icon">🏅</span><span>AZ-900 Azure Fundamentals</span></div>
+    <div class="cert-item"><span class="cert-icon">🏅</span><span>AZ-203 Azure Developer Associate</span></div>
+    <div class="cert-item"><span class="cert-icon">📋</span><span>Scrum Alliance (2014)</span></div>
+  </div>
+
+</aside>
+
+<!-- ════════════════ MAIN ════════════════ -->
+<main class="main" role="main">
+
+  <!-- HERO -->
+  <header class="hero fade-up" id="summary">
+    <h1 class="hero-name">Saket <span>Ranjan</span></h1>
+    <div class="hero-roles">
+      <span class="role-badge" style="background:rgba(91,138,245,0.12);color:#7aacff">Tech Lead</span>
+      <span class="role-badge" style="background:rgba(123,104,238,0.12);color:#a394f9">Solution Architect</span>
+      <span class="role-badge" style="background:rgba(45,212,191,0.1);color:#2dd4bf">Enterprise Java · Payments · Cloud</span>
+    </div>
+    <p class="hero-summary">
+      Senior technology leader with <strong>11.5+ years</strong> delivering enterprise-scale Java/Spring Boot platforms for AT&T. Proven track record architecting and leading payment modernization initiatives — including Fiserv Commerce Hub migration, CyberSource tokenization, and cloud-native microservices on Azure. Currently integrating <strong>Generative AI and agentic workflows (MCP servers)</strong> into delivery pipelines to accelerate engineering velocity. Recognized for translating complex business requirements into scalable, maintainable, and high-performing distributed systems while leading cross-functional teams of up to 13 engineers.
+    </p>
+    <div class="hero-metrics">
+      <div class="metric"><div class="metric-val">11.5+</div><div class="metric-label">Years experience</div></div>
+      <div class="metric"><div class="metric-val">13</div><div class="metric-label">Engineers led</div></div>
+      <div class="metric"><div class="metric-val">300+</div><div class="metric-label">Batch jobs migrated</div></div>
+      <div class="metric"><div class="metric-val">6</div><div class="metric-label">Enterprise projects</div></div>
+    </div>
+  </header>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="section-head"><h2>Experience</h2></div>
+
+    <!-- Accenture -->
+    <div class="exp-card open" id="card-acc">
+      <div class="exp-header" onclick="toggleExp('acc')">
+        <div class="exp-company-logo" style="background:rgba(147,51,234,0.15);color:#c084fc">AC</div>
+        <div class="exp-meta">
+          <div class="exp-title">Software Development Specialist <span style="color:var(--dim);font-weight:400">→ Tech Lead</span></div>
+          <div class="exp-company">Accenture — AT&T / OLPS Account</div>
+          <div class="exp-date">Dec 2021 – Present · Pune, India</div>
+        </div>
+        <span class="exp-toggle">⌄</span>
+      </div>
+      <div class="exp-body">
+
+        <!-- Project 1 -->
+        <div class="proj-card open" id="proj-fiserv">
+          <div class="proj-header" onclick="toggleProj('fiserv')">
+            <div>
+              <div class="proj-name">Payment Channel Migration — AT&T Fiserv Commerce Hub</div>
+              <div class="proj-meta">
+                <span class="client-tag">AT&T, USA</span>
+                <span class="tech-tag">Spring Boot</span>
+                <span class="tech-tag">Kafka</span>
+                <span class="tech-tag">Redis</span>
+                <span class="tech-tag">GenAI/MCP</span>
+                <span class="tech-tag">Microservices</span>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;flex-shrink:0">
+              <span class="proj-period">Jan 2025 – Present</span>
+              <span class="proj-toggle">⌄</span>
+            </div>
+          </div>
+          <div class="proj-body">
+            <p class="proj-desc">
+              Led full migration of AT&T's enterprise payment channel from legacy CyberSource APIs to Fiserv Commerce Hub — covering new charge, refund, cancel-auth, and settlement flows. Decomposed monolithic payment processing into a distributed, fault-tolerant microservices architecture while integrating GenAI tooling to accelerate delivery.
+            </p>
+            <ul class="bullet-list">
+              <li>Served as <strong class="kw">Tech Lead</strong> collaborating directly with AT&T and Fiserv stakeholders for requirement gathering, solution design, and API contract definition.</li>
+              <li>Designed and delivered <strong class="kw">end-to-end Fiserv Commerce Hub integration</strong> (auth, settle, reversal, refund) replacing all legacy CyberSource payment flows.</li>
+              <li>Engineered <strong class="kw">distributed microservice architecture</strong> using Saga, Circuit Breaker, and Outbox patterns for resilience and transactional consistency.</li>
+              <li>Integrated <strong class="kw">Generative AI and Agentic AI workflows</strong> via GitHub MCP server — reducing code scaffolding time by ~40% and improving code suggestion accuracy with Copilot.</li>
+              <li>Developed and deployed <strong class="kw">AT&T in-house AI models</strong> to contextualize business logic, enhancing co-pilot accuracy for domain-specific payment APIs.</li>
+              <li>Led <strong class="kw">code reviews, architectural decisions, and technical mentoring</strong> for the team; championed CI/CD hygiene and deployment reliability.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Project 2 -->
+        <div class="proj-card" id="proj-capm">
+          <div class="proj-header" onclick="toggleProj('capm')">
+            <div>
+              <div class="proj-name">CAPM–BSSE: PAM REST API & Azure Cloud Transformation</div>
+              <div class="proj-meta">
+                <span class="client-tag">AT&T, USA</span>
+                <span class="tech-tag">Java 8</span>
+                <span class="tech-tag">Spring Boot</span>
+                <span class="tech-tag">Azure</span>
+                <span class="tech-tag">Kafka</span>
+                <span class="tech-tag">Docker / K8s</span>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;flex-shrink:0">
+              <span class="proj-period">Jan 2022 – Dec 2024</span>
+              <span class="proj-toggle">⌄</span>
+            </div>
+          </div>
+          <div class="proj-body">
+            <p class="proj-desc">
+              Spearheaded re-engineering of the CAPM (Customer Account Payment Management) platform — converting all SOAP/EJB APIs to RESTful microservices and migrating the full application stack from on-premises to Azure. Delivered a scalable, cloud-native architecture that improved system reliability and operational elasticity for AT&T's payment management workflows.
+            </p>
+            <ul class="bullet-list">
+              <li>Served as <strong class="kw">Tech Lead</strong> with end-to-end accountability for solution delivery, architecture, and team performance across a <strong class="kw">7-engineer team</strong>.</li>
+              <li>Architected <strong class="kw">SOAP → REST migration</strong> for 15+ payment APIs and EJB → Spring Boot re-platforming, eliminating monolithic coupling.</li>
+              <li>Designed <strong class="kw">Azure-native deployment topology</strong>: Azure App Services, AKS, PostgreSQL, with full CI/CD via GitHub Actions and Docker/Kubernetes.</li>
+              <li>Implemented <strong class="kw">microservices design patterns</strong> (API Gateway, Service Registry, Event Sourcing) to achieve fault isolation and horizontal scalability.</li>
+              <li>Oversaw <strong class="kw">CI/CD pipeline governance</strong> — streamlining build, test, and deployment cycles; reduced release cycle time by ~30%.</li>
+              <li>Provided technical mentoring and career coaching to junior engineers — contributing to team skill elevation and retention.</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Amdocs -->
+    <div class="exp-card" id="card-amd">
+      <div class="exp-header" onclick="toggleExp('amd')">
+        <div class="exp-company-logo" style="background:rgba(52,211,153,0.12);color:#34d399">AM</div>
+        <div class="exp-meta">
+          <div class="exp-title">Software Development Team Lead</div>
+          <div class="exp-company">Amdocs — AT&T Account</div>
+          <div class="exp-date">Feb 2016 – Dec 2021 · Pune, India</div>
+        </div>
+        <span class="exp-toggle">⌄</span>
+      </div>
+      <div class="exp-body">
+
+        <!-- CCTP -->
+        <div class="proj-card" id="proj-cctp">
+          <div class="proj-header" onclick="toggleProj('cctp')">
+            <div>
+              <div class="proj-name">Dashboard–CCTP Scripting: Azure Cloud Enablement</div>
+              <div class="proj-meta">
+                <span class="client-tag">AT&T, USA</span>
+                <span class="tech-tag">Spring Boot</span>
+                <span class="tech-tag">Microservices</span>
+                <span class="tech-tag">Azure App Services</span>
+                <span class="tech-tag">Kafka</span>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;flex-shrink:0">
+              <span class="proj-period">Feb 2021 – Dec 2021</span>
+              <span class="proj-toggle">⌄</span>
+            </div>
+          </div>
+          <div class="proj-body">
+            <p class="proj-desc">
+              Led re-architecture of the call center scripting platform (CCTP) used across AT&T's Southwest and West regions. Decomposed the monolithic application into microservices and migrated to Azure cloud, improving scalability and operational agility for thousands of call center agents.
+            </p>
+            <ul class="bullet-list">
+              <li>Led <strong class="kw">13-engineer team</strong> as Tech Lead, overseeing architecture, delivery, and quality across the full project lifecycle.</li>
+              <li>Designed <strong class="kw">monolith-to-microservices decomposition strategy</strong>; migrated 8+ independent services to Azure App Services.</li>
+              <li>Managed and optimized <strong class="kw">CI/CD pipelines</strong>, enabling zero-downtime deployments and significantly reducing regression incidents.</li>
+              <li>Drove <strong class="kw">team alignment to delivery milestones</strong>, ensuring on-time delivery with high code quality standards.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Bad Debt -->
+        <div class="proj-card" id="proj-bdf">
+          <div class="proj-header" onclick="toggleProj('bdf')">
+            <div>
+              <div class="proj-name">Bad Debt Fraud Reduction — Microservices Modernization</div>
+              <div class="proj-meta">
+                <span class="client-tag">AT&T, USA</span>
+                <span class="tech-tag">Java 8</span>
+                <span class="tech-tag">Spring Boot</span>
+                <span class="tech-tag">Oracle DB</span>
+                <span class="tech-tag">Docker / K8s</span>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;flex-shrink:0">
+              <span class="proj-period">Mar 2020 – Jan 2021</span>
+              <span class="proj-toggle">⌄</span>
+            </div>
+          </div>
+          <div class="proj-body">
+            <p class="proj-desc">
+              Modernized AT&T's payment platform to minimize bad debt exposure and combat payment fraud. Designed and built 10 independent microservices implementing Payment Profile (AutoPay enrollment) and Create Payment (transaction processing for new and existing customers).
+            </p>
+            <ul class="bullet-list">
+              <li>Architected and delivered <strong class="kw">10 independent payment microservices</strong> covering AutoPay enrollment, transaction processing, and fraud signaling.</li>
+              <li>Applied <strong class="kw">Domain-Driven Design and SOLID principles</strong> to ensure modularity and long-term maintainability.</li>
+              <li>Led <strong class="kw">code reviews and quality governance</strong>; implemented unit test coverage targets and CI gate checks.</li>
+              <li>Proactively addressed <strong class="kw">architectural bottlenecks</strong>, resolving performance degradation in high-volume payment paths.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Tokenization -->
+        <div class="proj-card" id="proj-tok">
+          <div class="proj-header" onclick="toggleProj('tok')">
+            <div>
+              <div class="proj-name">Tokenization — API-based Payment Orchestration</div>
+              <div class="proj-meta">
+                <span class="client-tag">AT&T, USA</span>
+                <span class="tech-tag">Java 8</span>
+                <span class="tech-tag">Spring Boot</span>
+                <span class="tech-tag">Kafka</span>
+                <span class="tech-tag">Oracle</span>
+                <span class="tech-tag">CyberSource</span>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;flex-shrink:0">
+              <span class="proj-period">Jun 2019 – Mar 2020</span>
+              <span class="proj-toggle">⌄</span>
+            </div>
+          </div>
+          <div class="proj-body">
+            <p class="proj-desc">
+              Engineered the Tokenization API orchestrating end-of-day payment operations across multiple payment methods. Built a secure data pipeline aggregating daily payment data and streamlining settlement with CyberSource (Visa), using Kafka for real-time notifications.
+            </p>
+            <ul class="bullet-list">
+              <li>Designed and built <strong class="kw">secure tokenization pipeline</strong> for end-of-day settlement with CyberSource/Visa — handling high-volume transaction data reliably.</li>
+              <li>Leveraged <strong class="kw">Kafka for real-time event streaming</strong> to decouple payment notification flows and improve auditability.</li>
+              <li>Applied <strong class="kw">industry-standard API design patterns</strong> for resilient, maintainable, and high-throughput payment orchestration.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- PWMB -->
+        <div class="proj-card" id="proj-pwmb">
+          <div class="proj-header" onclick="toggleProj('pwmb')">
+            <div>
+              <div class="proj-name">PWMB & Cryptocurrency Payment Enablement</div>
+              <div class="proj-meta">
+                <span class="client-tag">AT&T, USA</span>
+                <span class="tech-tag">Java 6</span>
+                <span class="tech-tag">REST / SOAP</span>
+                <span class="tech-tag">Jenkins</span>
+                <span class="tech-tag">Agile Scrum</span>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;flex-shrink:0">
+              <span class="proj-period">Apr 2018 – Jun 2019</span>
+              <span class="proj-toggle">⌄</span>
+            </div>
+          </div>
+          <div class="proj-body">
+            <p class="proj-desc">
+              Designed and developed payment solutions enabling AT&T customers to pay Mobility and DTV bills via Pay with My Bank (PWMB) and Cryptocurrency — expanding the company's digital payment portfolio with secure, scalable integrations.
+            </p>
+            <ul class="bullet-list">
+              <li>Built <strong class="kw">secure integrations with traditional and emerging financial platforms</strong> (bank ACH, cryptocurrency gateways).</li>
+              <li>Led technical analysis of alternative payment channel integrations, driving requirements finalization with client stakeholders.</li>
+              <li>Delivered within Agile Scrum, participating in backlog refinement, sprint planning, and customer demos.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- U2L -->
+        <div class="proj-card" id="proj-u2l">
+          <div class="proj-header" onclick="toggleProj('u2l')">
+            <div>
+              <div class="proj-name">Unix-to-Linux (U2L) — Mainframe Modernization</div>
+              <div class="proj-meta">
+                <span class="client-tag">AT&T, USA</span>
+                <span class="tech-tag">Java 7</span>
+                <span class="tech-tag">Oracle 11g</span>
+                <span class="tech-tag">Shell Scripting</span>
+                <span class="tech-tag">AIX → Linux</span>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;flex-shrink:0">
+              <span class="proj-period">Aug 2016 – Jun 2019</span>
+              <span class="proj-toggle">⌄</span>
+            </div>
+          </div>
+          <div class="proj-body">
+            <p class="proj-desc">
+              Key contributor in the mainframe modernization initiative — converting COBOL-based systems to Java 7 and migrating 300+ AIX-resident batch jobs to the Linux environment, reducing infrastructure costs and improving operational reliability.
+            </p>
+            <ul class="bullet-list">
+              <li>Migrated <strong class="kw">300+ batch jobs</strong> from AIX to Linux — ensuring seamless recompilation, job reruns, and environment-specific optimization.</li>
+              <li>Converted <strong class="kw">COBOL → Java 7</strong> for core business modules, preserving functional parity while modernizing the codebase.</li>
+              <li>Supported <strong class="kw">system integration and post-migration stabilization</strong> with cross-functional teams to meet business continuity targets.</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Datamatics -->
+    <div class="exp-card" id="card-dat">
+      <div class="exp-header" onclick="toggleExp('dat')">
+        <div class="exp-company-logo" style="background:rgba(251,191,36,0.12);color:#fbbf24">DM</div>
+        <div class="exp-meta">
+          <div class="exp-title">Software Developer</div>
+          <div class="exp-company">Datamatics Global Services Limited</div>
+          <div class="exp-date">Feb 2015 – Jan 2016 · India</div>
+        </div>
+        <span class="exp-toggle">⌄</span>
+      </div>
+      <div class="exp-body">
+        <p style="font-size:13px;color:var(--muted);line-height:1.7">
+          Contributed to Java-based enterprise application development, working across the full SDLC. Built foundational skills in J2EE, web services, and Oracle database programming within a professional services environment.
+        </p>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="section-head"><h2>Technical Skills</h2></div>
+    <div class="skills-grid">
+
+      <div class="skill-group">
+        <div class="skill-group-title">Core Java Platform</div>
+        <div class="skill-bars">
+          <div class="skill-row"><span class="skill-name">Java 8/11/17</span><div class="skill-bar-track"><div class="skill-bar-fill" data-width="0.95" style="background:var(--accent)"></div></div></div>
+          <div class="skill-row"><span class="skill-name">Spring Boot</span><div class="skill-bar-track"><div class="skill-bar-fill" data-width="0.95" style="background:var(--accent)"></div></div></div>
+          <div class="skill-row"><span class="skill-name">Spring Data JPA</span><div class="skill-bar-track"><div class="skill-bar-fill" data-width="0.90" style="background:var(--accent)"></div></div></div>
+          <div class="skill-row"><span class="skill-name">Multithreading</span><div class="skill-bar-track"><div class="skill-bar-fill" data-width="0.88" style="background:var(--accent)"></div></div></div>
+          <div class="skill-row"><span class="skill-name">Collections / Streams</span><div class="skill-bar-track"><div class="skill-bar-fill" data-width="0.90" style="background:var(--accent)"></div></div></div>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-group-title">Architecture & Design</div>
+        <div class="skill-bars">
+          <div class="skill-row"><span class="skill-name">Microservices</span><div class="skill-bar-track"><div class="skill-bar-fill" data-width="0.93" style="background:var(--green)"></div></div></div>
+          <div class="skill-row"><span class="skill-name">System Design</span><div class="skill-bar-track"><div class="skill-bar-fill" data-width="0.90" style="background:var(--green)"></div></div></div>
+          <div class="skill-row"><span class="skill-name">Design Patterns (GoF)</span><div class="skill-bar-track"><div class="skill-bar-fill" data-width="0.88" style="background:var(--green)"></div></div></div>
+          <div class="skill-row"><span class="skill-name">SOLID Principles</span><div class="skill-bar-track"><div class="skill-bar-fill" data-width="0.90" style="background:var(--green)"></div></div></div>
+          <div class="skill-row"><span class="skill-name">RESTful APIs</span><div class="skill-bar-track"><div class="skill-bar-fill" data-width="0.95" style="background:var(--green)"></div></div></div>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-group-title">Cloud & DevOps</div>
+        <div class="skill-bars">
+          <div class="skill-row"><span class="skill-name">Microsoft Azure</span><div class="skill-bar-track"><div class="skill-bar-fill" data-width="0.85" style="background:var(--accent2)"></div></div></div>
+          <div class="skill-row"><span class="skill-name">Docker</span><div class="skill-bar-track"><div class="skill-bar-fill" data-width="0.83" style="background:var(--accent2)"></div></div></div>
+          <div class="skill-row"><span class="skill-name">Kubernetes</span><div class="skill-bar-track"><div class="skill-bar-fill" data-width="0.78" style="background:var(--accent2)"></div></div></div>
+          <div class="skill-row"><span class="skill-name">GitHub Actions / CI/CD</span><div class="skill-bar-track"><div class="skill-bar-fill" data-width="0.85" style="background:var(--accent2)"></div></div></div>
+          <div class="skill-row"><span class="skill-name">Jenkins</span><div class="skill-bar-track"><div class="skill-bar-fill" data-width="0.80" style="background:var(--accent2)"></div></div></div>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-group-title">Messaging, Data & AI</div>
+        <div class="skill-bars">
+          <div class="skill-row"><span class="skill-name">Apache Kafka</span><div class="skill-bar-track"><div class="skill-bar-fill" data-width="0.85" style="background:var(--amber)"></div></div></div>
+          <div class="skill-row"><span class="skill-name">Redis Cache</span><div class="skill-bar-track"><div class="skill-bar-fill" data-width="0.78" style="background:var(--amber)"></div></div></div>
+          <div class="skill-row"><span class="skill-name">Oracle / PostgreSQL</span><div class="skill-bar-track"><div class="skill-bar-fill" data-width="0.83" style="background:var(--amber)"></div></div></div>
+          <div class="skill-row"><span class="skill-name">GenAI / Agentic AI</span><div class="skill-bar-track"><div class="skill-bar-fill" data-width="0.80" style="background:var(--amber)"></div></div></div>
+          <div class="skill-row"><span class="skill-name">MCP Server Dev</span><div class="skill-bar-track"><div class="skill-bar-fill" data-width="0.75" style="background:var(--amber)"></div></div></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CERTIFICATIONS -->
+  <section id="certifications">
+    <div class="section-head"><h2>Certifications</h2></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div class="edu-item">
+        <div class="edu-icon">🏅</div>
+        <div>
+          <div class="edu-deg">AZ-900: Azure Fundamentals</div>
+          <div class="edu-school">Microsoft Certified</div>
+          <div class="edu-year">Active</div>
+        </div>
+      </div>
+      <div class="edu-item">
+        <div class="edu-icon">🏅</div>
+        <div>
+          <div class="edu-deg">AZ-203: Azure Developer Associate</div>
+          <div class="edu-school">Microsoft Certified</div>
+          <div class="edu-year">Active</div>
+        </div>
+      </div>
+      <div class="edu-item">
+        <div class="edu-icon">📋</div>
+        <div>
+          <div class="edu-deg">Certified Scrum Practitioner</div>
+          <div class="edu-school">Scrum Alliance — 3-day intensive</div>
+          <div class="edu-year">August 2014</div>
+        </div>
+      </div>
+      <div class="edu-item">
+        <div class="edu-icon">🤖</div>
+        <div>
+          <div class="edu-deg">GenAI & Agentic AI (MCP)</div>
+          <div class="edu-school">Practical — GitHub MCP, Claude Code, Copilot</div>
+          <div class="edu-year">2024–Present</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section id="education">
+    <div class="section-head"><h2>Education</h2></div>
+    <div class="edu-item">
+      <div class="edu-icon">🎓</div>
+      <div>
+        <div class="edu-deg">B.Tech — Computer Science & Engineering</div>
+        <div class="edu-school">SRM University, Chennai</div>
+        <div class="edu-year">2008 – 2012</div>
+      </div>
+    </div>
+    <div class="edu-item" style="margin-top:8px">
+      <div class="edu-icon">📚</div>
+      <div>
+        <div class="edu-deg">Industrial Training — Java Enterprise</div>
+        <div class="edu-school">HCL CDC — 6-month Java project training</div>
+        <div class="edu-year">August 2010</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACHIEVEMENTS -->
+  <section id="achievements">
+    <div class="section-head"><h2>Achievements & Recognition</h2></div>
+    <div class="ach-grid">
+      <div class="ach-item"><span class="ach-icon">🏆</span><div class="ach-text"><strong style="color:var(--text)">Value Award</strong> — Amdocs. Recognized for outstanding performance and high-impact contributions to AT&T delivery.</div></div>
+      <div class="ach-item"><span class="ach-icon">⭐</span><div class="ach-text"><strong style="color:var(--text)">Spot Award ×2</strong> — Amdocs. Awarded twice for exceptional individual contributions exceeding expectations.</div></div>
+      <div class="ach-item"><span class="ach-icon">🥇</span><div class="ach-text"><strong style="color:var(--text)">Hackathon 1st Prize</strong> — Amdocs internal hackathon. Won first place for innovative technical solution.</div></div>
+      <div class="ach-item"><span class="ach-icon">🔬</span><div class="ach-text"><strong style="color:var(--text)">Innovation Council</strong> — Amdocs. Selected as a key member driving adoption of emerging technologies and continuous improvement.</div></div>
+      <div class="ach-item"><span class="ach-icon">📣</span><div class="ach-text"><strong style="color:var(--text)">Tech Summit Speaker</strong> — Presented technical papers at internal summits, earning accolades for research depth and real-world impact.</div></div>
+      <div class="ach-item"><span class="ach-icon">📈</span><div class="ach-text"><strong style="color:var(--text)">Consistent Top Ratings</strong> — Achieved top ratings in annual appraisals for technical expertise and delivery commitment across multiple cycles.</div></div>
+      <div class="ach-item"><span class="ach-icon">🚀</span><div class="ach-text"><strong style="color:var(--text)">Ahead-of-Schedule Delivery</strong> — Recognized by senior management for leading critical project deliveries ahead of schedule, driving client satisfaction.</div></div>
+      <div class="ach-item"><span class="ach-icon">👥</span><div class="ach-text"><strong style="color:var(--text)">Mentorship Impact</strong> — Mentored 10+ junior engineers and interns, enhancing team productivity and fostering a collaborative growth culture.</div></div>
+    </div>
+  </section>
+
+</main>
+</div>
+
+<script>
+// ── TAB SCROLL ──
+function scrollTo(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+}
+
+// ── EXPERIENCE TOGGLE ──
+function toggleExp(id) {
+  const card = document.getElementById('card-' + id);
+  card.classList.toggle('open');
+}
+
+// ── PROJECT TOGGLE ──
+function toggleProj(id) {
+  const card = document.getElementById('proj-' + id);
+  card.classList.toggle('open');
+}
+
+// ── SKILL BAR ANIMATION ──
+function animateBars() {
+  const bars = document.querySelectorAll('.skill-bar-fill');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const fill = e.target;
+        const width = parseFloat(fill.dataset.width);
+        fill.style.width = (width * 100) + '%';
+        fill.classList.add('animated');
+        observer.unobserve(fill);
+      }
+    });
+  }, { threshold: 0.2 });
+  bars.forEach(b => {
+    b.style.width = '0';
+    b.style.transform = 'none';
+    b.style.transition = 'width 0.9s cubic-bezier(0.22, 1, 0.36, 1)';
+    observer.observe(b);
+  });
+}
+
+// ── ACTIVE NAV on SCROLL ──
+function setupScrollSpy() {
+  const sections = ['summary','experience','skills','certifications','education','achievements'];
+  const navBtns = document.querySelectorAll('.nav-item');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const id = e.target.id;
+        navBtns.forEach((b,i) => b.classList.toggle('active', sections[i] === id));
+      }
+    });
+  }, { rootMargin: '-30% 0px -60% 0px' });
+  sections.forEach(id => { const el = document.getElementById(id); if(el) obs.observe(el); });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  animateBars();
+  setupScrollSpy();
+});
+</script>
+</body>
+</html>
